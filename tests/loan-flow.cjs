@@ -29,6 +29,8 @@ console.log('PASS: empty start, single-loan guard, reload, scan/deposit separati
 // Reward and stock rules, including exact deadline and late return.
 storage.clear();app=boot();
 assert.equal(app.read('points'),0);assert.equal(app.read('availableMachines()'),2);
+assert.equal(app.read('stations[0].clean'),20);assert.equal(app.read('stations[0].clean+stations[0].returned'),30);
+app.read('stations[0].clean=1;stations[0].returned=0'); // Explicit last-container fixture.
 app.click('start');app.click('borrow');
 assert.equal(app.read('availableMachines()'),1,'last clean container removes machine from borrowing count');
 app.click('start');app.click('simulate');assert.equal(app.read('points'),0,'scan gives no points');
@@ -52,3 +54,10 @@ for(let i=0;i<2;i++){app.click('start');app.click('borrow');app.click('start');a
 assert.equal(app.read('points'),20,'two on-time returns accumulate points');
 assert.equal(boot().read('points'),20,'accumulated points survive reload');
 console.log('PASS: repeated on-time returns accumulate 20 points.');
+
+storage.clear();storage.set('ntu-loop-state',JSON.stringify({points:30,loan:{id:'LOOP-0248',station:'North Spine',borrowedAt:Date.now()-1000},stations:[{name:'North Spine',clean:0,returned:1}]}));
+app=boot();assert.equal(app.read('points'),30);assert.equal(app.read('stations[0].clean'),19,'migration accounts for outstanding loan');
+app.click('start');app.click('simulate');app.click('deposit');
+assert.equal(app.read('stations[0].clean+stations[0].returned'),30,'return restores total at source machine');
+assert.equal(boot().read('stations[0].clean'),19,'reload does not reset updated inventory');
+console.log('PASS: 30 total / 20 clean defaults and safe migration with active loan.');
