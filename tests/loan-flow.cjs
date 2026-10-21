@@ -61,3 +61,23 @@ app.click('start');app.click('simulate');app.click('deposit');
 assert.equal(app.read('stations[0].clean+stations[0].returned'),30,'return restores total at source machine');
 assert.equal(boot().read('stations[0].clean'),19,'reload does not reset updated inventory');
 console.log('PASS: 30 total / 20 clean defaults and safe migration with active loan.');
+
+// Three-day policy: one charge only, including while the box remains held.
+storage.clear();app=boot();app.click('start');app.click('borrow');
+assert.equal(app.read('RETURN_WINDOW_MS'),72*60*60*1000);
+app.read('assessLateFee(loan.borrowedAt+RETURN_WINDOW_MS)');
+assert.equal(app.read('schoolFeesCents'),0,'exact deadline is on time');
+app.read('loan.borrowedAt=Date.now()-RETURN_WINDOW_MS-1;saveLoan()');
+app=boot();assert.equal(app.read('schoolFeesCents'),200,'reload assesses overdue loan');
+assert.ok(app.read('loan'),'fee does not close or erase the loan');
+app.read('assessLateFee();assessLateFee(loan.borrowedAt+100*24*60*60*1000)');
+assert.equal(app.read('schoolFeesCents'),200,'fee never repeats or accumulates daily');
+app=boot();assert.equal(app.read('schoolFeesCents'),200,'reload does not duplicate charge');
+app.click('start');app.click('simulate');app.click('deposit');
+assert.equal(app.read('receipt.feeCents'),200);assert.equal(app.read('receipt.earned'),0);
+assert.equal(app.read('schoolFeesCents'),200,'late return does not reverse fee');
+app.click('deposit');assert.equal(app.read('schoolFeesCents'),200);
+app.click('start');app.click('borrow');app.click('start');app.click('simulate');app.click('deposit');
+assert.equal(app.read('receipt.feeCents'),0);assert.equal(app.read('receipt.earned'),10);
+assert.equal(app.read('schoolFeesCents'),200,'on-time next loan does not add fees');
+console.log('PASS: 72-hour boundary, automatic overdue charge, no repeat charges, persistence, late receipt and on-time subsequent loan.');

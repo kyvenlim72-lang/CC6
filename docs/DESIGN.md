@@ -106,4 +106,11 @@ The [interactive prototype](../index.html) provides visual references for Home, 
 - Use recycling-inspired color while describing reuse accurately.
 - Keep status, errors and completion understandable without icons.
 - Do not imply certified hygiene, measured carbon savings, real station availability or live account access.
-- Do not invent return deadlines, reward amounts or non-return fees.
+- Use the project owner’s three-day deadline and one-time S$2 charge; mark all billing as simulated.
+
+
+## Current three-day return and school-fee policy
+
+The project owner’s latest instruction supersedes earlier fee assumptions: return within **3 days (72 hours)** for 10 points and no charge. A return exactly at the deadline is on time. Once the container remains unreturned past that deadline, record a **single S$2 late/replacement fee** against the student’s school fees. There is no daily accumulation, S$5 cap or additional replacement charge. A late return closes the loan but does not reverse this charge. Only one container can be held at a time, including while overdue.
+
+The prototype checks elapsed time while open, on reload and before return completion. Each loan can trigger this charge only once. The simulated school-fee total persists across same-tab reloads and later borrowing cycles. No real payment, student billing record or school system is connected. Production automatic billing while the app is closed requires an authorised backend and NTU integration.

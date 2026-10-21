@@ -4,7 +4,7 @@
 
 Open `index.html` in a browser, or run `python -m http.server 8766 --bind 127.0.0.1` in this repository and visit `http://127.0.0.1:8766` on the same computer. No dependencies or build step are needed.
 
-Start without a container → choose a demo machine → simulate scanning its QR to borrow → view elapsed holding time → simulate a container QR scan and physical return → see the completed duration. Only one container can be held at a time. A same-tab reload preserves the active demo loan using session storage; there is no real account, camera or machine connection. The holding timer does not impose a minimum hold period; a separate 24-hour demo reward window determines points only.
+Start without a container → choose a demo machine → simulate scanning its QR to borrow → view elapsed holding time → simulate a container QR scan and physical return → see the completed duration. Only one container can be held at a time. A same-tab reload preserves the active demo loan using session storage; there is no real account, camera or machine connection. The holding timer does not impose a minimum hold period; a separate 72-hour demo reward window determines points only.
 
 This demo's machine-QR borrowing interaction follows the project owner's 21 October 2026 request; the original proposal below retains its NTU-card borrowing description. Locations and availability are illustrative. See [visual design](docs/DESIGN.md) and [experience design](docs/EXPERIENCE.md).
 
@@ -187,6 +187,13 @@ The following bibliography is reproduced from “Week 8 Proposal (Don)” with f
 
 ## Demo points and machine availability
 
-The prototype awards **10 points per confirmed return within 24 hours of borrowing**, including the exact deadline. These are illustrative demo settings, not an approved NTU policy. QR identification alone awards nothing. A late return closes the loan without adding or deducting points. Points accumulate across completed loans and survive same-tab reloads together with the loan and inventory.
+The prototype awards **10 points per confirmed return within 3 days (72 hours) of borrowing**, including the exact deadline. These are illustrative demo settings, not an approved NTU policy. QR identification alone awards nothing. A late return closes the loan without adding or deducting points. Points accumulate across completed loans and survive same-tab reloads together with the loan and inventory.
 
 Home shows the points balance and the number of online machines with at least one clean container. Borrowing reduces clean inventory; returning adds to stock awaiting central washing, not clean stock. Empty online machines accept returns but cannot dispense containers. Offline machines are excluded. All quantities are simulated; no live machine feed, redemption or backend is connected. Each demo machine starts with 30 containers: 20 clean and 10 awaiting washing. Hall cluster remains offline, so its stock cannot be borrowed. Counts change with transactions; they are not automatically reset to 20 on each borrow. Existing sessions receive the new starting inventory while retaining points and subtracting any active loan from its source machine. Session storage is tab-local, with in-memory fallback when unavailable.
+
+
+## Current three-day return and school-fee policy
+
+The project owner’s latest instruction supersedes earlier fee assumptions: return within **3 days (72 hours)** for 10 points and no charge. A return exactly at the deadline is on time. Once the container remains unreturned past that deadline, record a **single S$2 late/replacement fee** against the student’s school fees. There is no daily accumulation, S$5 cap or additional replacement charge. A late return closes the loan but does not reverse this charge. Only one container can be held at a time, including while overdue.
+
+The prototype checks elapsed time while open, on reload and before return completion. Each loan can trigger this charge only once. The simulated school-fee total persists across same-tab reloads and later borrowing cycles. No real payment, student billing record or school system is connected. Production automatic billing while the app is closed requires an authorised backend and NTU integration.
