@@ -1,5 +1,15 @@
 # CC6 — NTU Loop
 
+## Interactive phone prototype
+
+Open `index.html` in a browser, or run `python -m http.server 8766 --bind 127.0.0.1` in this repository and visit `http://127.0.0.1:8766` on the same computer. No dependencies or build step are needed.
+
+Start without a container → choose a demo machine → simulate scanning its QR to borrow → view elapsed holding time → simulate a container QR scan and physical return → see the completed duration. Only one container can be held at a time. A same-tab reload preserves the active demo loan using session storage; there is no real account, camera or machine connection. The timer does not impose a deadline or minimum hold period.
+
+This demo's machine-QR borrowing interaction follows the project owner's 21 October 2026 request; the original proposal below retains its NTU-card borrowing description. Locations and availability are illustrative. See [visual design](docs/DESIGN.md) and [experience design](docs/EXPERIENCE.md).
+
+Run the state-transition checks with `node tests/loan-flow.cjs`.
+
 ## Project proposal: Week 8 Proposal (Don)
 
 ### Closing the Loop: A Centralised Reusable Food-Container System for NTU
