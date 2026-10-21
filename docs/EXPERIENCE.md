@@ -31,7 +31,7 @@ All surfaces are represented in the [interactive prototype](../index.html). Comp
 
 Use clear, friendly instructions: “Return your container,” “Try a demo scan,” “Enter container code” and “Return complete.” Put “demo” near claims of scanning, station availability and success. Explain that there is no upfront deposit and a charge applies only for non-return; its amount and timing remain undecided.
 
-Use “staff wash containers centrally.” Never imply the machine washes the box. Do not introduce points, deadlines or quantified environmental achievements as implemented features.
+Use “staff wash containers centrally.” Never imply the machine washes the box. Keep points and their 24-hour qualification window explicitly labeled as demo rules. Do not claim quantified environmental achievements.
 
 ## Component Patterns
 
@@ -65,7 +65,7 @@ Use “staff wash containers centrally.” Never imply the machine washes the bo
 | Focus | Visible focus on every control; reading order matches interaction order. |
 | Offline / permission denied | No network or camera call is needed after the page is loaded; camera permission is never requested. |
 
-The active loan and its start timestamp use sessionStorage for same-tab reloads. When storage is unavailable, use memory only. This is a tab-local demonstration, not cross-device account enforcement. The timer updates each second from the timestamp; it is not a deadline, fee countdown or mandatory waiting period. Return confirmation clears the active loan and freezes the duration in the receipt. No borrow action may replace an existing active loan.
+The active loan and its start timestamp use sessionStorage for same-tab reloads. When storage is unavailable, use memory only. This is a tab-local demonstration, not cross-device account enforcement. The timer updates each second from the timestamp; it is elapsed time, separate from the explicitly labeled 24-hour demo reward window; it is not a fee countdown or mandatory waiting period. Return confirmation clears the active loan and freezes the duration in the receipt. No borrow action may replace an existing active loan.
 
 ## Interaction Primitives
 
@@ -116,3 +116,10 @@ Preserve a single-column phone layout on narrow screens and center it on larger 
 Mechanical coverage check: every IA surface has a journey, state treatment and prototype reference; component names match both contracts; token references resolve to DESIGN.md. All requested visitor interactions are covered. This is a draft, not an opt-in reviewer validation report.
 
 Production decisions remain open: machine verification, account access, loss disputes, actual locations, deadline/grace period, non-return amount, privacy and hygiene operations. They do not block a clearly labeled demonstration.
+
+
+## Demo points and machine availability
+
+The prototype awards **10 points per confirmed return within 24 hours of borrowing**, including the exact deadline. These are illustrative demo settings, not an approved NTU policy. QR identification alone awards nothing. A late return closes the loan without adding or deducting points. Points accumulate across completed loans and survive same-tab reloads together with the loan and inventory.
+
+Home shows the points balance and the number of online machines with at least one clean container. Borrowing reduces clean inventory; returning adds to stock awaiting central washing, not clean stock. Empty online machines accept returns but cannot dispense containers. Offline machines are excluded. All quantities are simulated; no live machine feed, redemption or backend is connected. Initially North Spine has 1 clean container, South Spine has 3, and Hall cluster is offline. Session storage is tab-local, with in-memory fallback when unavailable.

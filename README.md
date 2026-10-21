@@ -4,7 +4,7 @@
 
 Open `index.html` in a browser, or run `python -m http.server 8766 --bind 127.0.0.1` in this repository and visit `http://127.0.0.1:8766` on the same computer. No dependencies or build step are needed.
 
-Start without a container → choose a demo machine → simulate scanning its QR to borrow → view elapsed holding time → simulate a container QR scan and physical return → see the completed duration. Only one container can be held at a time. A same-tab reload preserves the active demo loan using session storage; there is no real account, camera or machine connection. The timer does not impose a deadline or minimum hold period.
+Start without a container → choose a demo machine → simulate scanning its QR to borrow → view elapsed holding time → simulate a container QR scan and physical return → see the completed duration. Only one container can be held at a time. A same-tab reload preserves the active demo loan using session storage; there is no real account, camera or machine connection. The holding timer does not impose a minimum hold period; a separate 24-hour demo reward window determines points only.
 
 This demo's machine-QR borrowing interaction follows the project owner's 21 October 2026 request; the original proposal below retains its NTU-card borrowing description. Locations and availability are illustrative. See [visual design](docs/DESIGN.md) and [experience design](docs/EXPERIENCE.md).
 
@@ -183,3 +183,10 @@ The following bibliography is reproduced from “Week 8 Proposal (Don)” with f
 - Singapore Food Agency. (n.d.). *Food Handler's Handbook.*
 - Singapore Food Agency. (n.d.). *Safe use of plastic food packaging.*
 - Yadav, P., Silvenius, F., Katajajuuri, J.-M., & Leinonen, I. (2024). Life cycle assessment of reusable plastic food packaging. *Journal of Cleaner Production, 448*, 141529.
+
+
+## Demo points and machine availability
+
+The prototype awards **10 points per confirmed return within 24 hours of borrowing**, including the exact deadline. These are illustrative demo settings, not an approved NTU policy. QR identification alone awards nothing. A late return closes the loan without adding or deducting points. Points accumulate across completed loans and survive same-tab reloads together with the loan and inventory.
+
+Home shows the points balance and the number of online machines with at least one clean container. Borrowing reduces clean inventory; returning adds to stock awaiting central washing, not clean stock. Empty online machines accept returns but cannot dispense containers. Offline machines are excluded. All quantities are simulated; no live machine feed, redemption or backend is connected. Initially North Spine has 1 clean container, South Spine has 3, and Hall cluster is offline. Session storage is tab-local, with in-memory fallback when unavailable.
